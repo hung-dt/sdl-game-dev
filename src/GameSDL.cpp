@@ -50,12 +50,13 @@ bool GameSDL::init (const char* title,
   renderer_ = SDL_CreateRenderer (window_, -1, 0);
 
   // Load sprite image
-  SDL_Surface* surface = SDL_LoadBMP("assets/rider.bmp");
+  SDL_Surface* surface = SDL_LoadBMP("assets/animate.bmp");
   texture_ = SDL_CreateTextureFromSurface(renderer_, surface);
   SDL_FreeSurface(surface);
 
-  // Get the dimensions of the texture
-  SDL_QueryTexture(texture_, NULL, NULL, &srcRect_.w, &srcRect_.h);
+  // Dimensions of a sprite frame
+  srcRect_.w = 128;
+  srcRect_.h = 82;
 
   // Set the area dimensions we want to draw the texture on the window
   desRect_.w = srcRect_.w;
@@ -102,7 +103,8 @@ void GameSDL::handleEvents()
 
 void GameSDL::update()
 {
-
+  // Update window by moving to next frame to create animation
+  srcRect_.x = 128 * int(((SDL_GetTicks() / 100) % 6));
 }
 
 

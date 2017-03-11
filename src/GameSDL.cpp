@@ -80,7 +80,7 @@ void GameSDL::render()
   SDL_RenderClear (renderer_);
 
   // Draw the texture
-  SDL_RenderCopy(renderer_, texture_, &srcRect_, &desRect_);
+  SDL_RenderCopyEx(renderer_, texture_, &srcRect_, &desRect_, 0.0, NULL, SDL_FLIP_HORIZONTAL);
   //SDL_RenderCopy(renderer_, texture_, NULL, NULL);
 
   // Show the window

@@ -24,7 +24,12 @@ class GameSDL
   private:
     SDL_Window* window_;      /**< The window we'll be rendering to */
     SDL_Renderer* renderer_;  /**< Renderer */
-    bool isRunning_;          //!< Member variable "isRunning_"
+
+    SDL_Texture* texture_;    /**< HW-accelerated rendering */
+    SDL_Rect srcRect_;        /**< Area of texture to draw on window */
+    SDL_Rect desRect_;        /**< Area on window to draw texture on */
+
+    bool isRunning_;          /**< Game loop condition */
 };
 
 #endif // GAMESDL_H

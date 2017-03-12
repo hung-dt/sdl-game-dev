@@ -38,10 +38,8 @@
 			<Add library="mingw32" />
 			<Add library="SDL2main" />
 			<Add library="SDL2" />
-			<Add library="user32" />
-			<Add library="gdi32" />
-			<Add library="winmm" />
-			<Add library="dxguid" />
+			<Add library="SDL2_image" />
+			<Add directory="D:/Study/Tools/sdl-mingw/i686/lib" />
 		</Linker>
 		<Unit filename="include/GameSDL.h" />
 		<Unit filename="src/GameSDL.cpp" />

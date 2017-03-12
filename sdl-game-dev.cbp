@@ -42,7 +42,9 @@
 			<Add directory="D:/Study/Tools/sdl-mingw/i686/lib" />
 		</Linker>
 		<Unit filename="include/GameSDL.h" />
+		<Unit filename="include/TextureManager.h" />
 		<Unit filename="src/GameSDL.cpp" />
+		<Unit filename="src/TextureManager.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />

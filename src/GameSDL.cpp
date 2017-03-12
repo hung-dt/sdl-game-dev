@@ -1,9 +1,10 @@
 #include <iostream>
 #include "GameSDL.h"
+#include "TextureManager.h"
 
 
 GameSDL::GameSDL()
-  : window_ (NULL), renderer_ (NULL), texture_(NULL), isRunning_ (false)
+  : window_ (NULL), renderer_ (NULL), isRunning_ (false), currentFrame_ (0)
 {
   //ctor
 }
@@ -16,7 +17,6 @@ GameSDL::~GameSDL()
   std::cout << "INFO: Clean up SDL and quit!" << std::endl;
   SDL_DestroyWindow (window_);
   SDL_DestroyRenderer (renderer_);
-  SDL_DestroyTexture(texture_);
   SDL_Quit();
 }
 
@@ -49,20 +49,8 @@ bool GameSDL::init (const char* title,
   // Get the renderer
   renderer_ = SDL_CreateRenderer (window_, -1, 0);
 
-  // Load sprite image
-  SDL_Surface* surface = IMG_Load("assets/animate-alpha.png");
-  texture_ = SDL_CreateTextureFromSurface(renderer_, surface);
-  SDL_FreeSurface(surface);
-
-  // Dimensions of a sprite frame
-  srcRect_.w = 128;
-  srcRect_.h = 82;
-
-  // Set the area dimensions we want to draw the texture on the window
-  desRect_.w = srcRect_.w;
-  desRect_.h = srcRect_.h;
-  desRect_.x = srcRect_.x = 0;
-  desRect_.y = srcRect_.y = 0;
+  // Load image
+  TextureManager::instance()->load ("assets/animate-alpha.png", "animate", renderer_);
 
   isRunning_ = true;
   std::cout << "INFO: SDL initialized OK!" << std::endl;
@@ -74,14 +62,16 @@ bool GameSDL::init (const char* title,
 void GameSDL::render()
 {
   // Set drawing color
-  SDL_SetRenderDrawColor (renderer_, 255, 0, 0, 255);
+  SDL_SetRenderDrawColor (renderer_, 34, 139, 34, 255);
 
   // Clear the window to the color
   SDL_RenderClear (renderer_);
 
-  // Draw the texture
-  SDL_RenderCopyEx(renderer_, texture_, &srcRect_, &desRect_, 0.0, NULL, SDL_FLIP_NONE);
-  //SDL_RenderCopy(renderer_, texture_, NULL, NULL);
+  // Draw a static texture
+  TextureManager::instance()->draw ("animate", 0, 0, 128, 82, renderer_);
+
+  // Draw an animate texture
+  TextureManager::instance()->drawFrame ("animate", 100, 100, 128, 82, 1, currentFrame_, renderer_);
 
   // Show the window
   SDL_RenderPresent (renderer_);
@@ -104,7 +94,7 @@ void GameSDL::handleEvents()
 void GameSDL::update()
 {
   // Update window by moving to next frame to create animation
-  srcRect_.x = 128 * int(((SDL_GetTicks() / 100) % 6));
+  currentFrame_ = int ( ( (SDL_GetTicks() / 100) % 6));
 }
 
 

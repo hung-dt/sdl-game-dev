@@ -50,7 +50,7 @@ bool GameSDL::init (const char* title,
   renderer_ = SDL_CreateRenderer (window_, -1, 0);
 
   // Load sprite image
-  SDL_Surface* surface = SDL_LoadBMP("assets/animate.bmp");
+  SDL_Surface* surface = IMG_Load("assets/animate-alpha.png");
   texture_ = SDL_CreateTextureFromSurface(renderer_, surface);
   SDL_FreeSurface(surface);
 
@@ -74,13 +74,13 @@ bool GameSDL::init (const char* title,
 void GameSDL::render()
 {
   // Set drawing color
-  SDL_SetRenderDrawColor (renderer_, 0, 0, 0, 255);
+  SDL_SetRenderDrawColor (renderer_, 255, 0, 0, 255);
 
   // Clear the window to the color
   SDL_RenderClear (renderer_);
 
   // Draw the texture
-  SDL_RenderCopyEx(renderer_, texture_, &srcRect_, &desRect_, 0.0, NULL, SDL_FLIP_HORIZONTAL);
+  SDL_RenderCopyEx(renderer_, texture_, &srcRect_, &desRect_, 0.0, NULL, SDL_FLIP_NONE);
   //SDL_RenderCopy(renderer_, texture_, NULL, NULL);
 
   // Show the window

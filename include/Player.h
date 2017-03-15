@@ -1,0 +1,16 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include <SDLGameObject.h>
+
+
+class Player : public SDLGameObject
+{
+  public:
+    Player(const LoaderParams*);
+    virtual void draw();
+    virtual void update();
+    virtual void clean();
+};
+
+#endif // PLAYER_H

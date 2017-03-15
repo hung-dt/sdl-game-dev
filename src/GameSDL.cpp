@@ -1,6 +1,8 @@
 #include <iostream>
 #include "GameSDL.h"
 #include "TextureManager.h"
+#include "Player.h"
+#include "Enemy.h"
 
 
 GameSDL::GameSDL()
@@ -18,6 +20,15 @@ GameSDL::~GameSDL()
   SDL_DestroyWindow (window_);
   SDL_DestroyRenderer (renderer_);
   SDL_Quit();
+}
+
+
+/** Return a single unique instance of GameSDL
+ */
+GameSDL& GameSDL::instance()
+{
+  static GameSDL instance_;
+  return instance_;
 }
 
 
@@ -49,8 +60,11 @@ bool GameSDL::init (const char* title,
   // Get the renderer
   renderer_ = SDL_CreateRenderer (window_, -1, 0);
 
-  // Load image
+  // Load texture image
   TextureManager::instance().load ("assets/animate-alpha.png", "animate", renderer_);
+
+  gameObjects_.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
+  gameObjects_.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
 
   isRunning_ = true;
   std::cout << "INFO: SDL initialized OK!" << std::endl;
@@ -67,11 +81,10 @@ void GameSDL::render()
   // Clear the window to the color
   SDL_RenderClear (renderer_);
 
-  // Draw a static texture
-  TextureManager::instance().draw ("animate", 0, 0, 128, 82, renderer_);
-
-  // Draw an animate texture
-  TextureManager::instance().drawFrame ("animate", 100, 100, 128, 82, 1, currentFrame_, renderer_);
+  // Draw all game objects
+  for (auto go : gameObjects_) {
+    go->draw();
+  }
 
   // Show the window
   SDL_RenderPresent (renderer_);
@@ -93,8 +106,10 @@ void GameSDL::handleEvents()
 
 void GameSDL::update()
 {
-  // Update window by moving to next frame to create animation
-  currentFrame_ = int ( ( (SDL_GetTicks() / 100) % 6));
+  // Update all game objects
+  for (auto go : gameObjects_) {
+    go->update();
+  }
 }
 
 
@@ -106,4 +121,9 @@ void GameSDL::clean()
 bool GameSDL::isRunning()
 {
   return isRunning_;
+}
+
+SDL_Renderer* GameSDL::renderer() const
+{
+  return renderer_;
 }

@@ -10,7 +10,7 @@
 
 int main (int argc, char** argv)
 {
-  GameSDL game;
+  GameSDL& game = GameSDL::instance();
 
   if (!game.init ("SDL Game Development",
                   SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -23,6 +23,8 @@ int main (int argc, char** argv)
     game.handleEvents();
     game.update();
     game.render();
+
+    SDL_Delay(10);
   }
 
   return 0;

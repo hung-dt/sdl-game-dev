@@ -19,13 +19,14 @@ public:
                   int x, int y, int w, int h, int currentRow, int currentFrame,
                   SDL_Renderer* renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
-  static TextureManager* instance();
+  static TextureManager& instance();
 
 private:
   TextureManager();
   ~TextureManager();
+  TextureManager(const TextureManager&);
+  const TextureManager& operator=(const TextureManager&);
 
-  static TextureManager* instance_;
   std::map<std::string, SDL_Texture*> textures_;
 };
 

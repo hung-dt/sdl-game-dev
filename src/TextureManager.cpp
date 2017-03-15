@@ -21,15 +21,10 @@ TextureManager::~TextureManager()
   std::cout << std::endl;
 }
 
-TextureManager* TextureManager::instance_ = NULL;
 
-TextureManager* TextureManager::instance()
+TextureManager& TextureManager::instance()
 {
-  if (!instance_) {
-    instance_ = new TextureManager();
-    return instance_;
-  }
-
+  static TextureManager instance_;
   return instance_;
 }
 

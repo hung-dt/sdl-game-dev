@@ -50,7 +50,7 @@ bool GameSDL::init (const char* title,
   renderer_ = SDL_CreateRenderer (window_, -1, 0);
 
   // Load image
-  TextureManager::instance()->load ("assets/animate-alpha.png", "animate", renderer_);
+  TextureManager::instance().load ("assets/animate-alpha.png", "animate", renderer_);
 
   isRunning_ = true;
   std::cout << "INFO: SDL initialized OK!" << std::endl;
@@ -68,10 +68,10 @@ void GameSDL::render()
   SDL_RenderClear (renderer_);
 
   // Draw a static texture
-  TextureManager::instance()->draw ("animate", 0, 0, 128, 82, renderer_);
+  TextureManager::instance().draw ("animate", 0, 0, 128, 82, renderer_);
 
   // Draw an animate texture
-  TextureManager::instance()->drawFrame ("animate", 100, 100, 128, 82, 1, currentFrame_, renderer_);
+  TextureManager::instance().drawFrame ("animate", 100, 100, 128, 82, 1, currentFrame_, renderer_);
 
   // Show the window
   SDL_RenderPresent (renderer_);

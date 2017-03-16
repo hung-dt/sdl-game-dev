@@ -22,8 +22,11 @@ void Player::draw()
   */
 void Player::update()
 {
-  x_--;
   currentFrame_ = int((SDL_GetTicks()/100) % 6);
+
+  acceleration_.x(.01);
+
+  SDLGameObject::update();
 }
 
 /** @brief (one liner)

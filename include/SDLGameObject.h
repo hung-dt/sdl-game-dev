@@ -3,6 +3,7 @@
 
 #include <GameObject.h>
 #include "LoaderParams.h"
+#include "Vector2D.h"
 
 
 class SDLGameObject : public GameObject
@@ -15,7 +16,10 @@ class SDLGameObject : public GameObject
     virtual void clean();
 
   protected:
-    int x_, y_, width_, height_, currentRow_, currentFrame_;
+    Vector2D position_;
+    Vector2D velocity_;
+    Vector2D acceleration_;
+    int width_, height_, currentRow_, currentFrame_;
     std::string textureId_;
 };
 

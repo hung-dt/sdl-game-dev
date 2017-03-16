@@ -22,9 +22,11 @@ void Enemy::draw()
   */
 void Enemy::update()
 {
-  x_++;
-  y_++;
   currentFrame_ = int((SDL_GetTicks()/100) % 6);
+  velocity_.x(1);
+  velocity_.y(1);
+
+  SDLGameObject::update();
 }
 
 /** @brief (one liner)

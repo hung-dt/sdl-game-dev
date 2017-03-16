@@ -4,10 +4,11 @@
 #include "SDLGameObject.h"
 
 SDLGameObject::SDLGameObject(const LoaderParams* params)
-: GameObject(params)
+: GameObject(params),
+  position_(params->x(), params->y()),
+  velocity_(0, 0),
+  acceleration_(0, 0)
 {
-  x_ = params->x();
-  y_ = params->y();
   width_ = params->width();
   height_ = params->height();
   textureId_ = params->textureId();
@@ -23,7 +24,7 @@ SDLGameObject::SDLGameObject(const LoaderParams* params)
 void SDLGameObject::draw()
 {
   TextureManager::instance().drawFrame(textureId_,
-                                       x_, y_, width_, height_,
+                                       position_.x(), position_.y(), width_, height_,
                                        currentRow_, currentFrame_,
                                        GameSDL::instance().renderer());
 }
@@ -34,6 +35,8 @@ void SDLGameObject::draw()
   */
 void SDLGameObject::update()
 {
+  velocity_ += acceleration_;
+  position_ += velocity_;
 }
 
 /** @brief (one liner)

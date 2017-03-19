@@ -4,7 +4,9 @@
 
 InputHandler::InputHandler()
 {
-
+  for (int i = 0; i < 3; i++) {
+    mouseButtonStates_.push_back(false);
+  }
 }
 
 InputHandler::~InputHandler()
@@ -27,6 +29,34 @@ void InputHandler::update()
     // User requests quit
     if (e.type == SDL_QUIT) {
       GameSDL::instance().quit();
+    }
+
+    if (e.type == SDL_MOUSEBUTTONDOWN) {
+      if (e.button.button == SDL_BUTTON_LEFT) {
+        mouseButtonStates_[LEFT] = true;
+      }
+
+      if (e.button.button == SDL_BUTTON_MIDDLE) {
+        mouseButtonStates_[MIDDLE] = true;
+      }
+
+      if (e.button.button == SDL_BUTTON_RIGHT) {
+        mouseButtonStates_[RIGHT] = true;
+      }
+    }
+
+    if (e.type == SDL_MOUSEBUTTONUP) {
+      if (e.button.button == SDL_BUTTON_LEFT) {
+        mouseButtonStates_[LEFT] = false;
+      }
+
+      if (e.button.button == SDL_BUTTON_MIDDLE) {
+        mouseButtonStates_[MIDDLE] = false;
+      }
+
+      if (e.button.button == SDL_BUTTON_RIGHT) {
+        mouseButtonStates_[RIGHT] = false;
+      }
     }
   }
 }
@@ -61,4 +91,10 @@ void InputHandler::initializeJoysticks()
   } else {
     joysticksInitialized_ = false;
   }
+}
+
+
+bool InputHandler::mouseButtonState(int buttonNumber) const
+{
+  return mouseButtonStates_[buttonNumber];
 }

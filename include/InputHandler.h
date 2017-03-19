@@ -5,6 +5,13 @@
 #include <SDL2/SDL.h>
 
 
+enum mouse_buttons
+{
+  LEFT = 0,
+  MIDDLE = 1,
+  RIGHT = 2
+};
+
 class InputHandler
 {
   public:
@@ -16,6 +23,8 @@ class InputHandler
     void initializeJoysticks();
     bool joysticksInitialized();
 
+    bool mouseButtonState(int) const;
+
   private:
     InputHandler();
     ~InputHandler();
@@ -24,6 +33,8 @@ class InputHandler
 
     std::vector<SDL_Joystick*> joysticks_;
     bool joysticksInitialized_;
+
+    std::vector<bool> mouseButtonStates_;
 };
 
 #endif // INPUTHANDLER_H

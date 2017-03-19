@@ -18,6 +18,7 @@ public:
   void render();
   void update();
   void handleEvents();
+  void quit();
   void clean();
   SDL_Renderer* renderer() const;
   bool isRunning();

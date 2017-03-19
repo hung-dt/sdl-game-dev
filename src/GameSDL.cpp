@@ -1,6 +1,7 @@
 #include <iostream>
 #include "GameSDL.h"
 #include "TextureManager.h"
+#include "InputHandler.h"
 #include "Player.h"
 #include "Enemy.h"
 
@@ -50,6 +51,9 @@ bool GameSDL::init (const char* title,
     return false;
   }
 
+  // Initialize joysticks
+  InputHandler::instance().initializeJoysticks();
+
   // Create rendering window
   window_ = SDL_CreateWindow (title, xPos, yPos, width, height, flags);
   if (!window_) {
@@ -93,14 +97,13 @@ void GameSDL::render()
 
 void GameSDL::handleEvents()
 {
-  SDL_Event e;
-  // Handle events on queue: take the most recent event from the queue
-  while (SDL_PollEvent (&e) != 0) {
-    // User requests quit
-    if (e.type == SDL_QUIT) {
-      isRunning_ = false;
-    }
-  }
+  InputHandler::instance().update();
+}
+
+
+void GameSDL::quit()
+{
+  isRunning_ = false;
 }
 
 
@@ -115,6 +118,7 @@ void GameSDL::update()
 
 void GameSDL::clean()
 {
+  InputHandler::instance().clean();
 }
 
 

@@ -7,11 +7,12 @@ InputHandler::InputHandler()
   for (int i = 0; i < 3; i++) {
     mouseButtonStates_.push_back(false);
   }
+  mousePosition_ = new Vector2D(0, 0);
 }
 
 InputHandler::~InputHandler()
 {
-
+  delete mousePosition_;
 }
 
 
@@ -58,6 +59,11 @@ void InputHandler::update()
         mouseButtonStates_[RIGHT] = false;
       }
     }
+
+    if (e.type == SDL_MOUSEMOTION) {
+      mousePosition_->x(e.motion.x);
+      mousePosition_->y(e.motion.y);
+    }
   }
 }
 
@@ -97,4 +103,9 @@ void InputHandler::initializeJoysticks()
 bool InputHandler::mouseButtonState(int buttonNumber) const
 {
   return mouseButtonStates_[buttonNumber];
+}
+
+Vector2D* InputHandler::mousePosition() const
+{
+  return mousePosition_;
 }

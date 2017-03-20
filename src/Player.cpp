@@ -1,5 +1,7 @@
 #include <SDL2/SDL.h>
 #include "Player.h"
+#include "InputHandler.h"
+
 
 Player::Player(const LoaderParams* params)
 : SDLGameObject(params)
@@ -24,7 +26,9 @@ void Player::update()
 {
   currentFrame_ = int((SDL_GetTicks()/100) % 6);
 
-  acceleration_.x(.01);
+  //acceleration_.x(.01);
+  Vector2D* v = InputHandler::instance().mousePosition();
+  velocity_ = (*v - position_) / 100;
 
   SDLGameObject::update();
 }

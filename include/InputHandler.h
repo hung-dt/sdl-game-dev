@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <SDL2/SDL.h>
-
+#include "Vector2D.h"
 
 enum mouse_buttons
 {
@@ -24,6 +24,7 @@ class InputHandler
     bool joysticksInitialized();
 
     bool mouseButtonState(int) const;
+    Vector2D* mousePosition() const;
 
   private:
     InputHandler();
@@ -35,6 +36,7 @@ class InputHandler
     bool joysticksInitialized_;
 
     std::vector<bool> mouseButtonStates_;
+    Vector2D* mousePosition_;
 };
 
 #endif // INPUTHANDLER_H

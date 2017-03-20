@@ -25,6 +25,9 @@ InputHandler& InputHandler::instance()
 void InputHandler::update()
 {
   SDL_Event e;
+
+  keyStates_ = SDL_GetKeyboardState(0);
+
   // Handle events on queue: take the most recent event from the queue
   while (SDL_PollEvent (&e) != 0) {
     // User requests quit
@@ -108,4 +111,12 @@ bool InputHandler::mouseButtonState(int buttonNumber) const
 Vector2D* InputHandler::mousePosition() const
 {
   return mousePosition_;
+}
+
+bool InputHandler::isKeyDown(SDL_Scancode key)
+{
+  if (keyStates_) {
+    return (keyStates_[key] == 1);
+  }
+  return false;
 }
